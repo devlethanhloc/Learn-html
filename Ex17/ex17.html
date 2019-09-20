@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input id="new-item" type="text">
+    <button id="add-btn">Add</button>
+    <button onclick = "delItem()" >Delete</button>
+    <ul id="todo-list">
+        <!-- <li>em di hoc</li>
+        <li>em di choi</li>
+        <li>em ve nha</li> -->
+    </ul>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var url = 'http://localhost:3000/todos';
+        axios.get(url).then(function(response){
+            var items = response.data;
+            console.log('Data loanded... ',items);
+            render(items);
+        });
+
+        var storageKey = 'todolist';
+        var dataString = localStorage.getItem(storageKey);
+        var todoList;
+
+        if (dataString)
+            todoList = JSON.parse(dataString);
+        else todoList = [];
+
+        var addBtn = document.getElementById('add-btn');
+        var input = document.getElementById('new-item');
+        // addBtn.onclick = addItem;
+        addBtn.addEventListener('click', addItem);
+        // addBtn.addEventListener('click', function(){
+        //     console.log('Add button is clicked');
+        // });
+        //addBtn trigger a click event
+        // event listener
+        input.value = sessionStorage.getItem('draft');
+        input.addEventListener('change', updateSesstionStorage);
+
+        function updateSesstionStorage(){
+            sessionStorage.setItem('draft', input.value);   
+        }
+
+        function addItem(){
+            //get value of the input
+            var newItem = input.value;
+            //add to todoList array
+            todoList.push(newItem);
+            // re-render
+            render();
+            //clear input
+            input.value = '';
+            localStorage.setItem(storageKey, JSON.stringify(todoList));
+        }
+
+        function delItem(){
+            var gotoList = document.getElementById('todo-list');
+            //cread card li
+            var delTheEndList = document.createElement('li');
+            // chose card li the end
+            delTheEndList.textContent = todoList.pop();
+            //remove card li
+            gotoList = delTheEndList.remove();
+        }
+
+        function render(items){
+            var gotoList = document.getElementById('todo-list');
+            var list = items.map(function(item){
+            return '<li>' + item.content + '</li>';
+            });
+            // array to string and view to web
+            gotoList.innerHTML = list.join('');
+        }
+
+        //render();       
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ToDo list</h1>
+
+    <ul id="todo-list">
+        <li id="a1">eat dinner with maria</li>
+        <li id="a2">drink coffee with tom</li>
+        <li>go to bed</li>
+    </ul>
+    <script>
+        var newLi = document.createElement('li');
+        var todoList = document.getElementById('todo-list');
+        newLi.textContent = 'i love o';
+        todoList.appendChild(newLi);
+        var todoLi1 = document.getElementById('a1');
+        var todoLi2 = document.getElementById('a2');
+        todoLi1.textContent = 'abc';
+        todoLi2.remove();
+        console.log(newLi);
+    </script>
+    <!-- .children          .remove()         .appendChild            .textContent -->
+</body>
+</html>
